@@ -1,0 +1,17 @@
+version: '3'
+services:
+  tsn-train:
+    image: pytorch_tsn:1.0
+    build: .
+    privileged: true
+    working_dir: /app
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - /home/gz/pytorch_tsn:/app
+      - /home/gz/Process-action-recognize/app/data:/app/data
+      - /home/gz/.pip:/root/.pip
+    command: python /app/src/keep_running.py
+    container_name: tsn_pytorch
+    restart: always
+    ipc: host
