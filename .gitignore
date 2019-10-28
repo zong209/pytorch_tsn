@@ -1,0 +1,5 @@
+.pyenv
+.vscode
+data
+models
+__src

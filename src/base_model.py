@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- encoding:utf-8 -*-
 '''
-@File    : InceptionV3.py
+@File    : base_model.py
 @Time    : 2019/09/25 11:11:33
 @Author  : Gaozong/260243
 @Contact : 260243@gree.com.cn/zong209@163.com
@@ -10,17 +10,12 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.autograd import Function
 
 
-class Tsn_network(nn.Module):
-    def __init__(self, num_segements, num_classes=4):
-        super(Tsn_network, self).__init__()
-        self.conv1 = BasicConv2d(num_segements,
-                                 64,
-                                 kernel_size=7,
-                                 stride=2,
-                                 padding=3)
+class TSN_BASE(nn.Module):
+    def __init__(self):
+        super(TSN_BASE, self).__init__()
+        self.conv1 = BasicConv2d(3, 64, kernel_size=7, stride=2, padding=3)
         self.conv2_reduce = BasicConv2d(64, 64, kernel_size=1)
         self.conv2_3x3 = BasicConv2d(64, 192, kernel_size=3, padding=1)
         self.Inception3A = Inception3a(192, [64, 64, 64, 64, 96, 32])
@@ -33,11 +28,9 @@ class Tsn_network(nn.Module):
         self.Inception4E = Inception3c(608, [128, 192, 192, 256])
         self.Inception5A = Inception3a(1056, [352, 192, 320, 160, 224, 128])
         self.Inception5B = Inception3a(1024, [352, 192, 320, 192, 224, 128])
-        self.pool_fc = InceptionAux(1024, num_classes)
-        self.Consensus = AttentionLayer(num_segements, num_classes)
+        self.Global_pool = Average_pool_module(1024)
 
     def forward(self, x):
-        x = x.reshape([-1, 3, 224, 224]).float()
         out = self.conv1(x)
         out = F.avg_pool2d(out, kernel_size=3, stride=2, padding=1)
         out = self.conv2_reduce(out)
@@ -53,9 +46,84 @@ class Tsn_network(nn.Module):
         out = self.Inception4E(out)
         out = self.Inception5A(out)
         out = self.Inception5B(out)
-        out = self.pool_fc(out)
-        out = self.Consensus(out)
+        out = F.avg_pool2d(out, kernel_size=7, stride=1)
+        out = torch.flatten(out, 1)
+        out = self.Global_pool(out)
         return out
+
+    def get_optim_policies(self):
+        first_conv_weight = []
+        first_conv_bias = []
+        normal_weight = []
+        normal_bias = []
+        bn = []
+
+        conv_cnt = 0
+        bn_cnt = 0
+        for m in self.modules():
+            if isinstance(m, torch.nn.Conv2d) or isinstance(
+                    m, torch.nn.Conv1d):
+                ps = list(m.parameters())
+                conv_cnt += 1
+                if conv_cnt == 1:
+                    first_conv_weight.append(ps[0])
+                    if len(ps) == 2:
+                        first_conv_bias.append(ps[1])
+                else:
+                    normal_weight.append(ps[0])
+                    if len(ps) == 2:
+                        normal_bias.append(ps[1])
+            elif isinstance(m, torch.nn.Linear):
+                ps = list(m.parameters())
+                normal_weight.append(ps[0])
+                if len(ps) == 2:
+                    normal_bias.append(ps[1])
+
+            elif isinstance(m, torch.nn.BatchNorm1d):
+                bn.extend(list(m.parameters()))
+            elif isinstance(m, torch.nn.BatchNorm2d):
+                bn_cnt += 1
+                # later BN's are frozen
+                if bn_cnt == 1:
+                    bn.extend(list(m.parameters()))
+            elif len(m._modules) == 0:
+                if len(list(m.parameters())) > 0:
+                    raise ValueError(
+                        "New atomic module type: {}. Need to give it a learning policy"
+                        .format(type(m)))
+
+        return [
+            {
+                'params': first_conv_weight,
+                'lr_mult': 1,
+                'decay_mult': 1,
+                'name': "first_conv_weight"
+            },
+            {
+                'params': first_conv_bias,
+                'lr_mult': 2,
+                'decay_mult': 0,
+                'name': "first_conv_bias"
+            },
+            {
+                'params': normal_weight,
+                'lr_mult': 1,
+                'decay_mult': 1,
+                'name': "normal_weight"
+            },
+            {
+                'params': normal_bias,
+                'lr_mult': 2,
+                'decay_mult': 0,
+                'name': "normal_bias"
+            },
+            {
+                'params': bn,
+                'lr_mult': 1,
+                'decay_mult': 0,
+                'name': "BN scale/shift"
+            },
+        ]
 
 
 class BasicConv2d(nn.Module):
@@ -192,81 +260,10 @@ class Inception3c(nn.Module):
         return torch.cat(outputs, 1)
 
 
-class InceptionAux(nn.Module):
-    def __init__(self, in_channels, num_classes):
-        super(InceptionAux, self).__init__()
-        self.fc = nn.Linear(in_channels, num_classes)
-        self.fc.stddev = 0.001
+class Average_pool_module(nn.Module):
+    def __init__(self, in_features):
+        super(Average_pool_module, self).__init__()
+        self.in_features = in_features
 
     def forward(self, x):
-        x = F.avg_pool2d(x, kernel_size=7, stride=1)
-
-        x = torch.flatten(x, 1)
-
-        x = self.fc(x)
-
         return x
-
-
-class PoolConsensus(nn.Module):
-    def __init__(self):
-        super(PoolConsensus, self).__init__()
-
-    def forward(self, x):
-        x = F.avg_pool2d(x, kernel=0, stride=1)
-
-        return x
-
-
-def sum_exp_el(exp_el_sum, extend_array, size):
-    batch_zize, segement_num, output_num = size
-    sum_array = []
-    for i in range(batch_zize):
-        sum_array.append(exp_el_sum[i] * extend_array[i])
-    sum_array = torch.cat(sum_array).reshape(size)
-    return sum_array
-
-
-class AttConsensus(Function):
-    @staticmethod
-    def forward(ctx, input, weight):
-        el = input * weight
-        el_exp = el.exp()
-        sum_1 = el_exp.sum(1)
-        size = el_exp.size()
-        sum_array = sum_exp_el(sum_1, torch.ones(size), size)
-        attention = el_exp.div(sum_array)
-        ctx.save_for_backward(input, weight, el_exp, sum_array, attention)
-        output = (input * (attention)).sum(1)
-        return output
-
-    @staticmethod
-    def backward(ctx, grad_output):
-
-        input, weight, el_exp, sum_array, attention = ctx.saved_variables
-        grad_input = grad_weight = None
-
-        if ctx.needs_input_grad[0]:
-            grad_input = sum_exp_el(grad_output, attention, attention.size())
-        if ctx.needs_input_grad[1]:
-            grad_att = attention * (sum_array - el_exp)
-
-            grad_weight = sum_exp_el(grad_output, (input) * (grad_att),
-                                     grad_att.size())
-
-        return grad_input, grad_weight
-
-
-class AttentionLayer(nn.Module):
-    def __init__(self, segememt_num, outputs_num):
-        super(AttentionLayer, self).__init__()
-        self.segememt_num = segememt_num
-        self.outputs_num = outputs_num
-        w = torch.empty(segememt_num, outputs_num)
-        self.weight = nn.Parameter(torch.nn.init.xavier_uniform_(w, gain=1))
-
-    def forward(self, input):
-
-        return AttConsensus.apply(
-            input.reshape([-1, self.segememt_num, self.outputs_num]),
-            self.weight)

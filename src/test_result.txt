@@ -1,0 +1,200 @@
+[ 1  7 14]
+[1:0] Test result:0 Truth:tensor([0]) tensor([True])
+[ 7 19 33]
+[1:1] Test result:0 Truth:tensor([0]) tensor([True])
+[ 18  90 146]
+[1:2] Test result:0 Truth:tensor([0]) tensor([True])
+[ 7 29 51]
+[1:3] Test result:0 Truth:tensor([0]) tensor([True])
+[ 3  5 12]
+[1:4] Test result:0 Truth:tensor([0]) tensor([True])
+[ 14  74 151]
+[1:5] Test result:0 Truth:tensor([1]) tensor([False])
+[ 12  63 132]
+[1:6] Test result:0 Truth:tensor([1]) tensor([False])
+[ 2 11 21]
+[1:7] Test result:0 Truth:tensor([0]) tensor([True])
+[ 9 47 62]
+[1:8] Test result:1 Truth:tensor([1]) tensor([True])
+[19 34 57]
+[1:9] Test result:0 Truth:tensor([0]) tensor([True])
+[ 1  6 11]
+[2:0] Test result:0 Truth:tensor([0]) tensor([True])
+[ 7 16 34]
+[2:1] Test result:0 Truth:tensor([0]) tensor([True])
+[ 27  92 154]
+[2:2] Test result:0 Truth:tensor([0]) tensor([True])
+[16 26 75]
+[2:3] Test result:0 Truth:tensor([0]) tensor([True])
+[ 4  7 12]
+[2:4] Test result:0 Truth:tensor([0]) tensor([True])
+[  5  52 103]
+[2:5] Test result:1 Truth:tensor([1]) tensor([True])
+[ 32  87 164]
+[2:6] Test result:1 Truth:tensor([1]) tensor([True])
+[ 9 13 24]
+[2:7] Test result:0 Truth:tensor([0]) tensor([True])
+[24 46 65]
+[2:8] Test result:1 Truth:tensor([1]) tensor([True])
+[ 1 31 53]
+[2:9] Test result:0 Truth:tensor([0]) tensor([True])
+[ 3  8 13]
+[3:0] Test result:0 Truth:tensor([0]) tensor([True])
+[ 8 21 34]
+[3:1] Test result:0 Truth:tensor([0]) tensor([True])
+[ 18  73 126]
+[3:2] Test result:0 Truth:tensor([0]) tensor([True])
+[12 32 69]
+[3:3] Test result:0 Truth:tensor([0]) tensor([True])
+[1 7 9]
+[3:4] Test result:0 Truth:tensor([0]) tensor([True])
+[ 15  65 112]
+[3:5] Test result:1 Truth:tensor([1]) tensor([True])
+[ 10 103 115]
+[3:6] Test result:1 Truth:tensor([1]) tensor([True])
+[ 6 14 28]
+[3:7] Test result:0 Truth:tensor([0]) tensor([True])
+[22 50 86]
+[3:8] Test result:1 Truth:tensor([1]) tensor([True])
+[ 8 32 44]
+[3:9] Test result:0 Truth:tensor([0]) tensor([True])
+[ 4  7 11]
+[4:0] Test result:0 Truth:tensor([0]) tensor([True])
+[ 4 14 36]
+[4:1] Test result:0 Truth:tensor([0]) tensor([True])
+[  6  83 145]
+[4:2] Test result:0 Truth:tensor([0]) tensor([True])
+[12 30 71]
+[4:3] Test result:0 Truth:tensor([0]) tensor([True])
+[ 3  7 11]
+[4:4] Test result:0 Truth:tensor([0]) tensor([True])
+[ 16  60 140]
+[4:5] Test result:1 Truth:tensor([1]) tensor([True])
+[ 42 107 164]
+[4:6] Test result:1 Truth:tensor([1]) tensor([True])
+[ 3 16 23]
+[4:7] Test result:0 Truth:tensor([0]) tensor([True])
+[ 1 30 87]
+[4:8] Test result:1 Truth:tensor([1]) tensor([True])
+[15 33 45]
+[4:9] Test result:0 Truth:tensor([0]) tensor([True])
+[ 2 10 13]
+[5:0] Test result:0 Truth:tensor([0]) tensor([True])
+[ 7 24 35]
+[5:1] Test result:0 Truth:tensor([0]) tensor([True])
+[ 30  76 127]
+[5:2] Test result:0 Truth:tensor([0]) tensor([True])
+[14 44 57]
+[5:3] Test result:0 Truth:tensor([0]) tensor([True])
+[ 2  7 12]
+[5:4] Test result:0 Truth:tensor([0]) tensor([True])
+[ 50  62 151]
+[5:5] Test result:0 Truth:tensor([1]) tensor([False])
+[ 51  90 164]
+[5:6] Test result:1 Truth:tensor([1]) tensor([True])
+[ 9 13 26]
+[5:7] Test result:0 Truth:tensor([0]) tensor([True])
+[ 4 45 79]
+[5:8] Test result:1 Truth:tensor([1]) tensor([True])
+[14 24 50]
+[5:9] Test result:0 Truth:tensor([0]) tensor([True])
+[ 2 10 12]
+[6:0] Test result:0 Truth:tensor([0]) tensor([True])
+[ 6 20 25]
+[6:1] Test result:0 Truth:tensor([0]) tensor([True])
+[ 48 104 108]
+[6:2] Test result:0 Truth:tensor([0]) tensor([True])
+[16 30 51]
+[6:3] Test result:0 Truth:tensor([0]) tensor([True])
+[ 3  7 12]
+[6:4] Test result:0 Truth:tensor([0]) tensor([True])
+[  8 100 142]
+[6:5] Test result:1 Truth:tensor([1]) tensor([True])
+[ 12 101 155]
+[6:6] Test result:1 Truth:tensor([1]) tensor([True])
+[ 2 14 29]
+[6:7] Test result:0 Truth:tensor([0]) tensor([True])
+[ 5 41 61]
+[6:8] Test result:1 Truth:tensor([1]) tensor([True])
+[17 30 41]
+[6:9] Test result:0 Truth:tensor([0]) tensor([True])
+[ 3  7 12]
+[7:0] Test result:0 Truth:tensor([0]) tensor([True])
+[ 5 17 36]
+[7:1] Test result:0 Truth:tensor([0]) tensor([True])
+[  6  63 113]
+[7:2] Test result:0 Truth:tensor([0]) tensor([True])
+[15 39 51]
+[7:3] Test result:0 Truth:tensor([0]) tensor([True])
+[ 3  7 10]
+[7:4] Test result:0 Truth:tensor([0]) tensor([True])
+[ 23  88 145]
+[7:5] Test result:1 Truth:tensor([1]) tensor([True])
+[ 53  63 111]
+[7:6] Test result:1 Truth:tensor([1]) tensor([True])
+[ 9 17 25]
+[7:7] Test result:0 Truth:tensor([0]) tensor([True])
+[13 46 59]
+[7:8] Test result:1 Truth:tensor([1]) tensor([True])
+[10 27 49]
+[7:9] Test result:0 Truth:tensor([0]) tensor([True])
+[ 1 10 11]
+[8:0] Test result:0 Truth:tensor([0]) tensor([True])
+[ 1 24 34]
+[8:1] Test result:0 Truth:tensor([0]) tensor([True])
+[ 46  56 119]
+[8:2] Test result:0 Truth:tensor([0]) tensor([True])
+[ 5 45 56]
+[8:3] Test result:0 Truth:tensor([0]) tensor([True])
+[4 8 9]
+[8:4] Test result:0 Truth:tensor([0]) tensor([True])
+[ 43  64 115]
+[8:5] Test result:1 Truth:tensor([1]) tensor([True])
+[ 39  62 118]
+[8:6] Test result:0 Truth:tensor([1]) tensor([False])
+[ 6 20 30]
+[8:7] Test result:0 Truth:tensor([0]) tensor([True])
+[ 5 34 72]
+[8:8] Test result:1 Truth:tensor([1]) tensor([True])
+[ 3 31 51]
+[8:9] Test result:0 Truth:tensor([0]) tensor([True])
+[ 4 10 12]
+[9:0] Test result:0 Truth:tensor([0]) tensor([True])
+[11 14 31]
+[9:1] Test result:0 Truth:tensor([0]) tensor([True])
+[ 48  99 127]
+[9:2] Test result:0 Truth:tensor([0]) tensor([True])
+[17 42 57]
+[9:3] Test result:0 Truth:tensor([0]) tensor([True])
+[3 7 9]
+[9:4] Test result:0 Truth:tensor([0]) tensor([True])
+[  7  76 111]
+[9:5] Test result:1 Truth:tensor([1]) tensor([True])
+[ 22  95 151]
+[9:6] Test result:1 Truth:tensor([1]) tensor([True])
+[ 2 20 27]
+[9:7] Test result:0 Truth:tensor([0]) tensor([True])
+[28 57 60]
+[9:8] Test result:1 Truth:tensor([1]) tensor([True])
+[ 6 22 39]
+[9:9] Test result:0 Truth:tensor([0]) tensor([True])
+[ 4  9 12]
+[10:0] Test result:0 Truth:tensor([0]) tensor([True])
+[12 17 31]
+[10:1] Test result:0 Truth:tensor([0]) tensor([True])
+[ 43  86 132]
+[10:2] Test result:0 Truth:tensor([0]) tensor([True])
+[14 31 69]
+[10:3] Test result:0 Truth:tensor([0]) tensor([True])
+[1 8 9]
+[10:4] Test result:0 Truth:tensor([0]) tensor([True])
+[  6  61 148]
+[10:5] Test result:1 Truth:tensor([1]) tensor([True])
+[ 46 109 140]
+[10:6] Test result:1 Truth:tensor([1]) tensor([True])
+[ 8 17 23]
+[10:7] Test result:0 Truth:tensor([0]) tensor([True])
+[21 42 59]
+[10:8] Test result:1 Truth:tensor([1]) tensor([True])
+[ 2 34 47]
+[10:9] Test result:0 Truth:tensor([0]) tensor([True])
