@@ -253,7 +253,7 @@ class TSN_INIT(object):
 
         def adjust_learning_rate(optimizer, epoch, lr, lr_steps, weight_decay):
             """Sets the learning rate to the initial LR 
-            decayed by 10 every 30 epochs"""
+            decayed by 10 every step"""
             decay = 0.1**(sum(epoch >= np.array(lr_steps)))
             lr = lr * decay
             decay = weight_decay
@@ -364,20 +364,20 @@ class TSN_INIT(object):
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--datadir', type=str, default='/app/data/train')
+    parser.add_argument('--datadir', type=str, default='/app/data/train',help='save path of data')
     parser.add_argument('--output_nums', type=int, default=4, help='numbers of classes')
     parser.add_argument('--segement_nums', type=int, default=3,help="numbers of segements in per video's clip ")
     parser.add_argument('--resume_file', type=str,default=None, help="pre-training weights file")
-    parser.add_argument('--epochs', type=int, default=200,help="epochs of training")
+    parser.add_argument('--epochs', type=int, default=200,help="train epochs")
     parser.add_argument('--lr', type=float,default=0.001,help="base learning rate")
     parser.add_argument('--lr_steps', type=list, help="muti-steps learning rate", default=[50,100])
     parser.add_argument('--weight_decay', type=float, help="weight decay", default=0.005)
     parser.add_argument('--batch_size', type=int, help="batch size of samples", default=32)
-    parser.add_argument('--num_workers', type=int, default=4,help="load videos")
+    parser.add_argument('--num_workers', type=int, default=4,help="workers of loading videos")
     parser.add_argument('--model_save_path', type=str, default='models', help='dictory path for save model')
     parser.add_argument("--model_prefix", type=str, default='zlfy', help='prefix name of model')
     parser.add_argument("--valid_interval", type=int, default=4, help='frequency of valid')
-    parser.add_argument("--print_param", type=bool, default=True, help='print network structure')
+    parser.add_argument("--print_param", type=str, default="True", help='print network structure')
     args = parser.parse_args()
 
 
